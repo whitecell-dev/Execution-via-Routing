@@ -1,0 +1,106 @@
+# GEMMA3:270M TRANSFORMER-EXECUTABLE IR v8.1
+# All 6 invariants enforced
+# Minimal 12-opcode ISA
+# Globally unique blocks
+# PHI nodes with block-prefixed sources
+# Body register mapping for loop-carried variables
+# Pure function validation
+# No manual flush - _start_block handles transitions
+
+function bubble_sort
+block entry
+  live-in: param
+  p0 = const param _
+  t0 = call len p0 _
+  r0 = mov t0 _
+  r1 = mov p0 _
+  t1 = const 0 _
+  r2 = mov t1 _
+  exit jump b0_while_header _
+end
+block b0_while_header
+  live-in: r0
+  r3 = phi entry:_ b2_while_backedge:r10
+  r4 = phi entry:r2 b2_while_backedge:r20
+  r5 = phi entry:_ b2_while_backedge:r11
+  r6 = phi entry:_ b2_while_backedge:r12
+  r7 = phi entry:r1 b2_while_backedge:r13
+  r8 = phi entry:_ b2_while_backedge:r14
+  t0 = lt r4 r0
+  exit br t0 b1_while_body b3_while_exit
+end
+block b1_while_body
+  live-in: none
+  t0 = const 0 _
+  r9 = mov t0 _
+  exit jump b4_while_header _
+end
+block b4_while_header
+  live-in: r0, r4
+  r10 = phi b1_while_body:r3 b6_while_backedge:r17
+  r11 = phi b1_while_body:r5 b6_while_backedge:r15
+  r12 = phi b1_while_body:r9 b6_while_backedge:r19
+  r13 = phi b1_while_body:r7 b6_while_backedge:r18
+  r14 = phi b1_while_body:r8 b6_while_backedge:r16
+  t0 = sub r0 r4
+  t1 = const 1 _
+  t2 = sub t0 t1
+  t3 = lt r12 t2
+  exit br t3 b5_while_body b7_while_exit
+end
+block b5_while_body
+  live-in: r12, r13
+  t0 = get r13 r12
+  t1 = const 1 _
+  t2 = add r12 t1
+  t3 = get r13 t2
+  t4 = lt t0 t3
+  exit br t4 b8_then b9_merge
+end
+block b8_then
+  live-in: r12, r13
+  m0 = call slice r13 0 r12 _
+  r15 = mov m0 _
+  m1 = alloc 2 _
+  t0 = const 1 _
+  t1 = add r12 t0
+  t2 = get r13 t1
+  m2 = set m1 0 t2
+  t3 = get r13 r12
+  m3 = set m2 1 t3
+  r16 = mov m3 _
+  t4 = const 2 _
+  t5 = add r12 t4
+  m4 = call slice r13 t5 len _
+  r17 = mov m4 _
+  t6 = add r15 r16
+  t7 = add t6 r17
+  r18 = mov t7 _
+  exit jump b9_merge _
+end
+block b9_merge
+  live-in: r12
+  t0 = const 1 _
+  t1 = add r12 t0
+  r19 = mov t1 _
+  exit jump b6_while_backedge _
+end
+block b6_while_backedge
+  live-in: none
+  exit jump b4_while_header _
+end
+block b7_while_exit
+  live-in: r4
+  t0 = const 1 _
+  t1 = add r4 t0
+  r20 = mov t1 _
+  exit jump b2_while_backedge _
+end
+block b2_while_backedge
+  live-in: none
+  exit jump b0_while_header _
+end
+block b3_while_exit
+  live-in: r7
+  exit ret r7 _
+end

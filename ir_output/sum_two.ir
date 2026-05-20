@@ -1,0 +1,17 @@
+# GEMMA3:270M TRANSFORMER-EXECUTABLE IR v8.1
+# All 6 invariants enforced
+# Minimal 12-opcode ISA
+# Globally unique blocks
+# PHI nodes with block-prefixed sources
+# Body register mapping for loop-carried variables
+# Pure function validation
+# No manual flush - _start_block handles transitions
+
+function sum_two
+block entry
+  live-in: param
+  p0 = const param _
+  p1 = const param _
+  t0 = add p0 p1
+  exit ret t0 _
+end

@@ -1,0 +1,286 @@
+# GEMMA3:270M TRANSFORMER-EXECUTABLE IR v5.0
+# All 6 invariants enforced
+# Minimal 12-opcode ISA
+# Globally unique blocks
+# PHI nodes at merges
+
+function run_multiplication_test
+block entry
+  live-in: print t2, print t4, range r3
+  t0 = const "..." _
+  r0 = mov t0 _
+  t1 = const "2,897,012,123,456" _
+  r1 = mov t1 _
+  m0 = alloc 0 _
+  r2 = mov m0 _
+  t2 = const ? _
+  t3 = call print t2 _
+  t4 = const "..." _
+  t5 = call print t4 _
+  t6 = call range r3 _
+  m1 = alloc t6 _
+  exit ret _ _
+end
+block b0_for_header
+  live-in: none
+  exit ret _ _
+end
+block b1_for_body
+  live-in: none
+  exit ret _ _
+end
+block b2_for_exit
+  live-in: none
+  exit jump b0_for_header _
+end
+block b0_for_header
+  live-in: m1
+  t0 = lt iter_idx iter_len
+  exit br t0 b1_for_body b2_for_exit
+end
+block b1_for_body
+  live-in: m1, print t8
+  t0 = lt iter_idx iter_len
+  r4 = get m1 iter_idx
+  t1 = call unknown _ _
+  r5 = mov t1 _
+  t2 = call unknown _ _
+  r6 = mov t2 _
+  t3 = const "[\d,]+" _
+  t4 = call unknown t3 r6 _
+  r7 = mov t4 _
+  t5 = const ? _
+  r8 = mov t5 _
+  t6 = call unknown r8 _
+  t7 = const ? _
+  r9 = mov t7 _
+  t8 = const ? _
+  t9 = call print t8 _
+  exit jump b0_for_header _
+end
+block b2_for_exit
+  live-in: m1, print _, print t8, r1, r2, r3
+  t0 = lt iter_idx iter_len
+  r4 = get m1 iter_idx
+  t1 = call unknown _ _
+  r5 = mov t1 _
+  t2 = call unknown _ _
+  r6 = mov t2 _
+  t3 = const "[\d,]+" _
+  t4 = call unknown t3 r6 _
+  r7 = mov t4 _
+  t5 = const ? _
+  r8 = mov t5 _
+  t6 = call unknown r8 _
+  t7 = const ? _
+  r9 = mov t7 _
+  t8 = const ? _
+  t9 = call print t8 _
+  t10 = call print _ _
+  t11 = call Counter r2 _
+  r10 = mov t11 _
+  t12 = const 0 _
+  t13 = call unknown r1 t12 _
+  r11 = mov t13 _
+  t14 = add r11 r3
+  t15 = const 100 _
+  t16 = add t14 t15
+  r12 = mov t16 _
+  t17 = const 0 _
+  r13 = mov t17 _
+  t18 = call unknown _ _
+  m2 = alloc t18 _
+  exit jump b0_for_header _
+end
+block b3_for_header
+  live-in: none
+  exit ret _ _
+end
+block b4_for_body
+  live-in: none
+  exit ret _ _
+end
+block b5_for_exit
+  live-in: none
+  exit jump b3_for_header _
+end
+block b3_for_header
+  live-in: m2
+  t0 = lt iter_idx iter_len
+  exit br t0 b4_for_body b5_for_exit
+end
+block b4_for_body
+  live-in: m2, r13, r3
+  t0 = lt iter_idx iter_len
+  r14 = get m2 iter_idx
+  t1 = add r14 r3
+  r15 = mov t1 _
+  t2 = call unknown r15 _
+  t3 = add r15 t2
+  r16 = sub r13 t3
+  exit jump b3_for_header _
+end
+block b5_for_exit
+  live-in: m2, print t10, print t12, print t4, print t6, print t8, r12, r13, r3
+  t0 = lt iter_idx iter_len
+  r14 = get m2 iter_idx
+  t1 = add r14 r3
+  r15 = mov t1 _
+  t2 = call unknown r15 _
+  t3 = add r15 t2
+  r16 = sub r13 t3
+  t4 = const ? _
+  t5 = call print t4 _
+  t6 = const ? _
+  t7 = call print t6 _
+  t8 = const ? _
+  t9 = call print t8 _
+  t10 = const ? _
+  t11 = call print t10 _
+  t12 = const ? _
+  t13 = call print t12 _
+  t14 = const 0 _
+  t15 = eq r16 t14
+  t16 = const 100 _
+  t17 = eq r12 t16
+  t18 = and t15 t17
+  exit jump b3_for_header _
+end
+block b6_then
+  live-in: none
+  exit ret _ _
+end
+block b7_else
+  live-in: none
+  exit ret _ _
+end
+block b8_merge
+  live-in: none
+  exit br t18 b6_then b7_else
+end
+block b6_then
+  live-in: print t0
+  t0 = const "..." _
+  t1 = call print t0 _
+  exit br t18 b6_then b7_else
+end
+block b7_else
+  live-in: print t0, r16
+  t0 = const "..." _
+  t1 = call print t0 _
+  t2 = const 0 _
+  t3 = eq r16 t2
+  exit br t18 b6_then b7_else
+end
+block b9_then
+  live-in: none
+  exit ret _ _
+end
+block b10_else
+  live-in: none
+  exit ret _ _
+end
+block b11_merge
+  live-in: none
+  exit br t3 b9_then b10_else
+end
+block b9_then
+  live-in: print t0
+  t0 = const "..." _
+  t1 = call print t0 _
+  exit br t3 b9_then b10_else
+end
+block b10_else
+  live-in: print t0, r16
+  t0 = const "..." _
+  t1 = call print t0 _
+  t2 = const ? _
+  t3 = lt r16 t2
+  exit br t3 b9_then b10_else
+end
+block b12_then
+  live-in: none
+  exit ret _ _
+end
+block b13_else
+  live-in: none
+  exit ret _ _
+end
+block b14_merge
+  live-in: none
+  exit br t3 b12_then b13_else
+end
+block b12_then
+  live-in: print t0
+  t0 = const "..." _
+  t1 = call print t0 _
+  exit br t3 b12_then b13_else
+end
+block b13_else
+  live-in: print t0, print t2
+  t0 = const "..." _
+  t1 = call print t0 _
+  t2 = const "..." _
+  t3 = call print t2 _
+  exit br t3 b12_then b13_else
+end
+block b14_merge
+  live-in: print t0, print t2
+  t0 = const "..." _
+  t1 = call print t0 _
+  t2 = const "..." _
+  t3 = call print t2 _
+  exit br t3 b12_then b13_else
+end
+block b11_merge
+  live-in: print t0, print t2
+  t0 = const "..." _
+  t1 = call print t0 _
+  t2 = const "..." _
+  t3 = call print t2 _
+  exit br t3 b12_then b13_else
+end
+block b8_merge
+  live-in: print t0, print t2, print t4
+  t0 = const "..." _
+  t1 = call print t0 _
+  t2 = const "..." _
+  t3 = call print t2 _
+  t4 = const "..." _
+  t5 = call print t4 _
+  t6 = call unknown _ _
+  t7 = call sorted t6 _
+  m3 = alloc t7 _
+  exit br t3 b12_then b13_else
+end
+block b15_for_header
+  live-in: none
+  exit ret _ _
+end
+block b16_for_body
+  live-in: none
+  exit ret _ _
+end
+block b17_for_exit
+  live-in: none
+  exit jump b15_for_header _
+end
+block b15_for_header
+  live-in: m3
+  t0 = lt iter_idx iter_len
+  exit br t0 b16_for_body b17_for_exit
+end
+block b16_for_body
+  live-in: m3, print t1
+  t0 = lt iter_idx iter_len
+  t1 = const ? _
+  t2 = call print t1 _
+  exit jump b15_for_header _
+end
+block b17_for_exit
+  live-in: m3, print t1
+  t0 = lt iter_idx iter_len
+  t1 = const ? _
+  t2 = call print t1 _
+  exit jump b15_for_header _
+end
